@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsc.dao.IOrdersDao">
+    <select id="findAll" resultType="com.dsc.domain.Orders">
+        select * from orders
+    </select>
+    <delete id="delByIds" parameterType="int">
+        delete
+        from orders
+        where id = #{id}
+    </delete>
+<!--    <select id="findById" resultType="com.dsc.domain.Orders" parameterType="integer">-->
+<!--        select *-->
+<!--        from orders-->
+<!--        where id = #{id};-->
+<!--    </select>-->
+    <update id="updateById" parameterType="com.dsc.domain.Orders">
+        update orders
+        set orderNum=#{orderNum},
+            orderTime=#{orderTime},
+            peopleCount=#{peopleCount},
+            orderDesc=#{orderDesc},
+            payType=#{payType},
+            orderStatus=#{orderStatus} where id=#{id}
+    </update>
+</mapper>

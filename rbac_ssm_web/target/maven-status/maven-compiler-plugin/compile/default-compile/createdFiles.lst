@@ -1,0 +1,8 @@
+com\dsc\controller\RoleController.class
+com\dsc\controller\UserInfoController.class
+com\dsc\controller\PermissionController.class
+com\dsc\controller\ProductController.class
+com\dsc\security\UsersInfoService.class
+com\dsc\controller\OrdersController.class
+com\dsc\controller\LogAop.class
+com\dsc\controller\SysLogController.class

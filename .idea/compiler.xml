@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="rbac_ssm_domain" />
+        <module name="rbac_ssm_dao" />
+        <module name="rbac_ssm_service" />
+        <module name="rbac_ssm_web" />
+        <module name="rbac_ssm_utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="rbac_ssm_dao" target="11" />
+      <module name="rbac_ssm_domain" target="11" />
+      <module name="rbac_ssm_service" target="11" />
+      <module name="rbac_ssm_utils" target="11" />
+      <module name="rbac_ssm_web" target="11" />
+      <module name="rbac_system" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

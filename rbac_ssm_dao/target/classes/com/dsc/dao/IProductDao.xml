@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsc.dao.IProductDao">
+    <delete id="delByIds" parameterType="int">
+        delete
+        from product
+        where id = #{id}
+    </delete>
+    <select id="findById" resultType="com.dsc.domain.Product" parameterType="integer">
+        select *
+        from product
+        where id = #{id};
+    </select>
+    <update id="updateById" parameterType="com.dsc.domain.Product">
+        update product
+        set productNum=#{productNum},
+            productName=#{productName},
+            cityName=#{cityName},
+            DepartureTime=#{departureTime},
+            productPrice=#{productPrice},
+            productDesc=#{productDesc},
+            productStatus=#{productStatus} where id=#{id}
+    </update>
+
+    <select id="findAll" resultType="com.dsc.domain.Product">
+        select * from product
+    </select>
+</mapper>

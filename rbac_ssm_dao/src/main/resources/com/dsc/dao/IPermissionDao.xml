@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsc.dao.IPermissionDao">
+
+    <!--添加资源权限-->
+    <insert id="save" parameterType="com.dsc.domain.Permission">
+        insert into permission(permissionName,url) values(#{permissionName},#{url})
+    </insert>
+    <!--查询所有资源权限-->
+    <select id="findAll" resultType="com.dsc.domain.Permission">
+        select * from permission
+    </select>
+    <!--根据id查询资源权限详情-->
+    <select id="findById" parameterType="String" resultType="com.dsc.domain.Permission">
+        select * from permission where id=#{id}
+    </select>
+    <!--根据permissionId查询与role是否关联-->
+    <select id="findRolePermission" parameterType="String" resultType="int">
+        select count(1) from role_permission where permissionId = #{pid}
+    </select>
+    <!--解除和该资源权限和角色的绑定-->
+    <delete id="deleteFromRole_Permission" parameterType="String">
+        delete from role_permission where permissionId=#{pid}
+    </delete>
+    <!--根据pid删除该权限-->
+    <delete id="deleteById" parameterType="String">
+        delete from permission where id = #{pid}
+    </delete>
+</mapper>

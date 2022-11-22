@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsc.dao.IRoleDao">
+    <!--添加角色-->
+    <insert id="save" parameterType="com.dsc.domain.Role">
+        insert into `role`(roleName,roleDesc) values(#{roleName},#{roleDesc})
+    </insert>
+    <!--查询所有角色-->
+        <select id="findAll" resultType="com.dsc.domain.Role">
+            select * from `role`
+        </select>
+    <select id="findRoleUserByRoleId" resultType="java.lang.Integer">
+        select count(*) from users_role where roleId = #{roleId}
+    </select>
+    <delete id="delPermissionByRole">
+        delete from role_permission where roleId = #{roleId}
+    </delete>
+    <delete id="delRole">
+        delete from `role` where id = #{roleId}
+    </delete>
+    <!--角色详情查询-->
+    <select id="findById" parameterType="String" resultMap="rolePermissionMap">
+        SELECT
+            r.id,
+            r.roleDesc,
+            r.roleName,
+            rp.permissionId,
+            p.permissionName,
+            p.url
+        FROM
+            role r,
+            role_permission rp,
+            permission p
+        WHERE
+            r.id = rp.roleId
+          AND rp.permissionId = p.id
+          AND roleId = #{roleId}
+    </select>
+    <resultMap id="rolePermissionMap" type="com.dsc.domain.Role">
+        <id property="id" column="id"/>
+        <result property="roleDesc" column="roleDesc"/>
+        <result property="roleName" column="roleName"/>
+        <collection property="permissions" ofType="com.dsc.domain.Permission">
+            <id property="id" column="permissionId"/>
+            <result property="permissionName" column="permissionName"/>
+            <result property="url" column="url"/>
+        </collection>
+    </resultMap>
+
+    <!--根据角色id查询对应角色-->
+    <select id="findRoleInfoById" parameterType="String" resultType="com.dsc.domain.Role">
+        select * from role where id = #{roleId}
+    </select>
+
+    <!--查询角色可以添加的所有权限-->
+    <select id="findPermissions" resultType="com.dsc.domain.Permission">
+        select * from permission
+    </select>
+
+    <!--添加角色对应的权限-->
+    <insert id="addPermissionToRole" parameterType="String">
+        insert into role_permission(permissionId,roleId) values(#{permissionId},#{roleId})
+    </insert>
+
+
+    <select id="findPermissionByRoleId" resultType="java.lang.Integer">
+        select permissionId from role_permission where roleId = #{roleId}
+    </select>
+</mapper>

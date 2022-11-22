@@ -1,0 +1,9 @@
+com\dsc\domain\Traveller.class
+com\dsc\domain\UserInfo.class
+com\dsc\domain\CustomPage.class
+com\dsc\domain\Orders.class
+com\dsc\domain\Permission.class
+com\dsc\domain\Member.class
+com\dsc\domain\Product.class
+com\dsc\domain\Role.class
+com\dsc\domain\SysLog.class

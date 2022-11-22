@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsc.dao.IUsersInfoDao">
+    <insert id="addRoleToUser" parameterType="String">
+        insert into users_role(userId,roleId) values(#{userId},#{roleId})
+    </insert>
+    <select id="findByUserName" parameterType="String" resultMap="userRolePermissionMap" >
+        SELECT
+            u.id,
+            u.username,
+            u.`password`,
+            ur.roleId,
+            r.roleName,
+            r.roleDesc,
+            rp.permissionId,
+            p.permissionName
+        FROM
+            users u,
+            users_role ur,
+            role r,
+            role_permission rp,
+            permission p
+        WHERE
+            u.id = ur.userId
+          AND ur.roleId = r.id
+          AND r.id = rp.roleId
+          AND rp.permissionId = p.id
+          AND u.username = #{username}
+    </select>
+    <resultMap id="userRolePermissionMap" type="com.dsc.domain.UserInfo">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="com.dsc.domain.Role">
+            <id property="id" column="roleId"/>
+            <result property="roleName" column="roleName"/>
+            <result property="roleDesc" column="roleDesc"/>
+            <collection property="permissions" ofType="com.dsc.domain.Permission">
+                <id property="id" column="permissionId"/>
+                <result property="permissionName" column="permissionName"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+    <select id="findAll" resultType="com.dsc.domain.UserInfo">
+        select * from users
+    </select>
+    <!--根据用户名查询用户信息、用户对应的角色、角色对应的权限-->
+    <select id="findById" parameterType="String" resultMap="mymap" >
+        SELECT
+            u.id,
+            u.username,
+            u.`password`,
+            ur.roleId,
+            r.roleName,
+            r.roleDesc,
+            rp.permissionId,
+            p.permissionName
+        FROM
+            users u,
+            users_role ur,
+            role r,
+            role_permission rp,
+            permission p
+        WHERE
+            u.id = ur.userId
+          AND ur.roleId = r.id
+          AND r.id = rp.roleId
+          AND rp.permissionId = p.id
+          AND u.id = #{value}
+    </select>
+    <resultMap id="mymap" type="com.dsc.domain.UserInfo">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="com.dsc.domain.Role">
+            <id property="id" column="roleId"/>
+            <result property="roleName" column="roleName"/>
+            <result property="roleDesc" column="roleDesc"/>
+            <collection property="permissions" ofType="com.dsc.domain.Permission">
+                <id property="id" column="permissionId"/>
+                <result property="permissionName" column="permissionName"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findRoles" resultType="com.dsc.domain.Role">
+        select * from `role`
+    </select>
+
+    <select id="findRolesByUserId" resultType="java.lang.Integer">
+        select roleId from `users_role` where userId = #{userid}
+    </select>
+    <delete id="delOldRole">
+        delete from users_role where userId = #{userId}
+    </delete>
+</mapper>
